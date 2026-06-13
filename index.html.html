@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPN Mastery: Complete University-Level Course</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="mobile-header">
+        <button id="mobile-menu-btn" aria-label="Toggle Menu">☰</button>
+        <span class="mobile-title">VPN Mastery</span>
+        <button id="theme-toggle-mobile" class="theme-toggle" aria-label="Toggle Dark Mode">🌓</button>
+    </header>
+
+    <div class="app-container">
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h2>VPN Mastery</h2>
+                <button id="theme-toggle-desktop" class="theme-toggle" aria-label="Toggle Dark Mode">🌓</button>
+            </div>
+            <nav class="toc-nav">
+                <ul>
+                    <li><a href="#phase-1">Phase 1: Fundamentals</a></li>
+                    <li><a href="#phase-2">Phase 2: Before VPN</a></li>
+                    <li><a href="#phase-3">Phase 3: Technology Comparison</a></li>
+                    <li><a href="#phase-4">Phase 4: IPsec Deep Dive</a></li>
+                    <li><a href="#phase-5">Phase 5: Topology</a></li>
+                    <li><a href="#phase-6">Phase 6: Packet Journey</a></li>
+                    <li><a href="#phase-7">Phase 7: IKE Negotiation</a></li>
+                    <li><a href="#phase-8">Phase 8: JunOS Config</a></li>
+                    <li><a href="#phase-9">Phase 9: Troubleshooting</a></li>
+                    <li><a href="#phase-10">Phase 10: Packet Capture</a></li>
+                    <li><a href="#phase-11">Phase 11: Enterprise Design</a></li>
+                    <li><a href="#phase-12">Phase 12: Expert Topics</a></li>
+                    <li><a href="#phase-13">Phase 13: Practical Labs</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main id="content" class="main-content">
+            <div class="intro">
+                <h1>VPN Mastery: Complete University-Level Course</h1>
+                <p class="subtitle">Juniper JNCIP/JNCIE Track | Abid's Enterprise VPN Training</p>
+                <hr>
+                <p>I'll deliver this as a complete, phased course. Given your solid networking foundation, I'll move with appropriate depth without over-explaining IP basics — but I'll never skip a VPN-critical concept. Let's begin.</p>
+            </div>
+
+            <section id="phase-1">
+                <h2>PHASE 1 — VPN FUNDAMENTALS</h2>
+                
+                <h3>1.1 — What is a VPN, Really?</h3>
+                <p>Most people say "VPN = privacy." That's superficial. Let's be precise.<br>
+                A VPN is a logical private network constructed over a shared public infrastructure, using encapsulation, encryption, and authentication to make geographically separated private networks behave as if they are directly connected.</p>
+                <p>Three core pillars:</p>
+                <div class="ascii-container">
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│                    VPN = 3 PILLARS                          │
+│                                                             │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │ENCAPSULATION│  │ ENCRYPTION  │  │   AUTHENTICATION    │  │
+│  │             │  │             │  │                     │  │
+│  │ Wrapping    │  │ Making data │  │ Proving identity    │  │
+│  │ private     │  │ unreadable  │  │ of both endpoints   │  │
+│  │ packets     │  │ to others   │  │ before tunnel opens │  │
+│  │ inside      │  │             │  │                     │  │
+│  │ public      │  │             │  │                     │  │
+│  │ packets     │  │             │  │                     │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────┘  │
+│                                                             │
+│  WITHOUT ALL THREE, YOU DO NOT HAVE A PROPER VPN            │
+└─────────────────────────────────────────────────────────────┘</code></pre>
+                </div>
+                <p><strong>Real-world analogy:</strong><br>
+                Imagine you need to send classified bank documents from Rajshahi to Dhaka. You cannot use a private courier road — only public highways exist.</p>
+                <ul>
+                    <li><strong>Encapsulation</strong> = You put the classified document inside a sealed unmarked box. The box has delivery addresses on the outside, but nobody can see what's inside.</li>
+                    <li><strong>Encryption</strong> = The document inside uses a cipher — even if someone breaks open the box, they read gibberish.</li>
+                    <li><strong>Authentication</strong> = The recipient must show ID before the box is handed over. You verify the recipient is actually who they claim to be.</li>
+                </ul>
+                <p>The public highway is the Internet. The sealed, encrypted box is your VPN tunnel.</p>
+
+                <h3>1.2 — Why VPN Exists: The Problem It Solves</h3>
+                <p>Before VPN, enterprises had exactly two options to connect branch offices:</p>
+                <div class="ascii-container">
+<pre><code>OPTION 1: Leased Lines (Before VPN)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  [Dhaka HQ]────────────────────────[Rajshahi Branch]
+              Dedicated Physical Wire
+              
+  Cost: ৳৳৳৳৳ Extremely expensive
+  Security: High (nobody else uses the wire)
+  Scalability: Each branch = new physical wire
+  
+  Problem: 10 branches = 10 expensive leased lines
+  Problem: International branch = impossibly expensive
+
+
+OPTION 2: Public Internet (Without VPN)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  [Dhaka HQ]────[Internet]────[Rajshahi Branch]
+  
+  Cost: Cheap (just ISP subscription)
+  Security: ZERO — anyone can intercept
+  Privacy: ZERO — traffic is visible to all routers
+  
+  Problem: Cannot send private banking data
+  Problem: Cannot use private IP addresses</code></pre>
+                </div>
+                <p>VPN solves both problems:</p>
+                <div class="ascii-container">
+<pre><code>OPTION 3: VPN over Internet (The Solution)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  [Dhaka HQ]═══[Internet]═══[Rajshahi Branch]
+              ╔═══════════╗
+              ║ Encrypted ║  <── Virtual private tunnel
+              ║  Tunnel   ║      over public Internet
+              ╚═══════════╝
+              
+  Cost: Low (just ISP + VPN software/hardware)
+  Security: High (encrypted + authenticated)
+  Scalability: Add new branches easily
+  
+  ✓ Private data stays private
+  ✓ Private IPs work through the tunnel
+  ✓ Feels like a direct connection</code></pre>
+                </div>
+
+                <h3>1.3 — The Private IP Problem: Why 10.x.x.x Cannot Cross the Internet</h3>
+                <p>This is the most critical fundamental to understand deeply.<br>
+                The Internet routing system only routes PUBLIC IP addresses. Here's why:</p>
+                <div class="ascii-container">
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│                    IP ADDRESS UNIVERSE                          │
+│                                                                 │
+│  ┌───────────────────────────────────────────────────────────┐  │
+│  │                    PUBLIC IP SPACE                        │  │
+│  │  (4,294,967,296 total addresses - private ranges)         │  │
+│  │                                                           │  │
+│  │  Examples: 203.0.113.1, 8.8.8.8, 198.51.100.1             │  │
+│  │  Owned by: ISPs, companies, governments                   │  │
+│  │  Routable: YES — Internet backbone knows how to           │  │
+│  │            find these addresses                           │  │
+│  └───────────────────────────────────────────────────────────┘  │
+│                                                                 │
+│  ┌───────────────────────────────────────────────────────────┐  │
+│  │                 PRIVATE IP RANGES (RFC 1918)              │  │
+│  │                                                           │  │
+│  │  10.0.0.0/8    → 10.0.0.0   – 10.255.255.255              │  │
+│  │  172.16.0.0/12 → 172.16.0.0 – 172.31.255.255              │  │
+│  │  192.168.0.0/16→ 192.168.0.0– 192.168.255.255             │  │
+│  │                                                           │  │
+│  │  Owned by: Nobody — everyone uses them internally         │  │
+│  │  Routable on Internet: NO — Internet routers DROP them    │  │
+│  └───────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘</code></pre>
+                </div>
+                <p>WHY are private IPs not routable on the Internet?<br>
+                Because private IP ranges are used by MILLIONS of organizations simultaneously. Consider:</p>
+                <pre><code>  RAKUB Rajshahi Office:       10.10.10.0/24
+  Grameen Bank Dhaka:          10.10.10.0/24
+  A factory in Chittagong:     10.10.10.0/24
+  A school in Sylhet:          10.10.10.0/24
+  
+  ALL FOUR use IDENTICAL address ranges!</code></pre>
+                <p>If an Internet router received a packet destined for 10.10.10.100, it would have no idea which organization's network to send it to. The address is ambiguous globally — it only has meaning within a specific private network.<br>
+                This is why Internet backbone routers are configured to drop all RFC 1918 traffic by default.</p>
+
+                <h3>1.4 — Public IP, ISP Role, and How Internet Routing Works</h3>
+                <p>Let's trace how public IP routing actually works:</p>
+                <div class="ascii-container">
+<pre><code>  Institution A                 Internet Backbone                Institution B
+  ─────────────                 ─────────────────                ─────────────
+  
+  PC: 10.10.10.100             [ISP-A Router]
+         │                            │
+         │                     Routes based on
+  [Juniper Router]             BGP routing table
+  Public IP: 203.0.113.1              │
+         │                    [ISP Core Router 1]
+         │                            │
+         └────────────────────[ISP Core Router 2]────────────────[Juniper Router]
+                                      │                          Public: 198.51.100.1
+                                 Routes based                              │
+                                 on BGP only                    [Institution B LAN]
+                                                                 10.20.20.0/24</code></pre>
+                </div>
+                <p>BGP (Border Gateway Protocol) is the routing protocol of the Internet. Every ISP advertises which public IP blocks they own. For example:<br>
+                ISP-A tells the world:    "I own 203.0.113.0/24 — send traffic here"<br>
+                ISP-B tells the world:    "I own 198.51.100.0/24 — send traffic here"</p>
+                <div class="ascii-container">
+<pre><code>┌──────────────────────────────────────────────────────┐
+│ Internet Core Router Routing Table (simplified)      │
+│──────────────────────────────────────────────────────│
+│ Destination Network    │ Next Hop       │ Via        │
+│──────────────────────────────────────────────────────│
+│ 203.0.113.0/24         │ ISP-A peer     │ BGP        │
+│ 198.51.100.0/24        │ ISP-B peer     │ BGP        │
+│ 8.8.8.0/24             │ Google peer    │ BGP        │
+│ 10.0.0.0/8             │ NOT IN TABLE   │ DROPPED ✗  │
+│ 192.168.0.0/16         │ NOT IN TABLE   │ DROPPED ✗  │
+└──────────────────────────────────────────────────────┘</code></pre>
+                </div>
+
+                <h3>1.5 — NAT: The Partial Solution (And Why It's Not Enough)</h3>
+                <div class="ascii-container">
+<pre><code>WITHOUT NAT:
+  PC (10.10.10.100) → sends packet to Google (8.8.8.8)
+  Source IP: 10.10.10.100 ← Internet routers DROP this (private source)
+  
+WITH NAT:
+  PC (10.10.10.100) → Router translates → Source becomes 203.0.113.1
+  Source IP: 203.0.113.1 → Internet routers ACCEPT this (public source)
+  
+  NAT Table on Router:
+  ┌─────────────────────────────────────────────────────┐
+  │ Inside Local      │ Inside Global    │ Destination  │
+  │ 10.10.10.100:1234 │ 203.0.113.1:5001 │ 8.8.8.8:443  │
+  └─────────────────────────────────────────────────────┘
+
+Problem Scenario:
+  Institution A PC (10.10.10.100) wants to reach Institution B PC (10.20.20.100)
+  
+  With NAT:
+  Step 1: PC-A sends packet → Destination: 10.20.20.100
+  Step 2: Router-A looks at routing table → No route to 10.20.20.100 (private!)
+  Step 3: Router-A cannot NAT this — WHERE would it send it on the public Internet?
+  
+  The Internet has NO idea where 10.20.20.0/24 lives!
+  There is no ISP announcing this range!
+  NAT cannot solve the two-private-network problem.</code></pre>
+                </div>
+
+                <h3>1.6 — The VPN Solution: Conceptual Overview</h3>
+                <div class="ascii-container">
+<pre><code>┌─────────────────────────────────────────────────────────────────────┐
+│                    HOW VPN SOLVES THE PROBLEM                       │
+│                                                                     │
+│  Institution A LAN           TUNNEL          Institution B LAN      │
+│  10.10.10.0/24          ┌──────────┐        10.20.20.0/24           │
+│                         │          │                                │
+│  ┌──────────┐   private │ Internet │  private ┌──────────┐        │
+│  │PC-A      │◄──────────►│          │◄──────────►│PC-B      │        │
+│  │10.10.10  │           │          │           │10.20.20  │        │
+│  │  .100    │           └──────────┘           │  .100    │        │
+│  └──────────┘                │                 └──────────┘        │
+│        │                     │                      │              │
+│  [Juniper A]             PUBLIC IPs             [Juniper B]         │
+│  203.0.113.1 ═══════════════════════════════ 198.51.100.1          │
+│                                                                     │
+│  What the Internet sees:                                            │
+│  Source: 203.0.113.1  →  Destination: 198.51.100.1                 │
+│  (Public-to-Public: Internet routes this normally)                  │
+│                                                                     │
+│  What's HIDDEN inside that public packet:                           │
+│  Original Source: 10.10.10.100                                      │
+│  Original Dest:   10.20.20.100                                      │
+│  + Encrypted payload (the actual data)                              │
+└─────────────────────────────────────────────────────────────────────┘</code></pre>
+                </div>
+            </section>
+
+            <section id="phase-2">
+                <h2>PHASE 2 — BEFORE VPN EXISTS</h2>
+                <h3>2.1 — The Full Packet Journey (No VPN)</h3>
+                <p>Let's trace every single step when PC-A tries to reach PC-B without any VPN.</p>
+                <div class="ascii-container">
+<pre><code>NETWORK TOPOLOGY (No VPN):
+═══════════════════════════
+
+Institution A                 Internet                  Institution B
+─────────────                 ─────────                 ─────────────
+
+[PC-A]────────[Switch]────[Router-A]────[ISP-A]────[ISP-B]────[Router-B]────[Switch]────[PC-B]
+10.10.10.100          203.0.113.1              198.51.100.1              10.20.20.100
+              
+              GW: 10.10.10.1                                      GW: 10.20.20.1</code></pre>
+                </div>
+
+                <p><strong>STEP 1: PC-A Wants to Send to PC-B</strong></p>
+                <div class="ascii-container">
+<pre><code>┌─────────────────────────────────────────────────────┐
+│ PC-A (10.10.10.100) wants to reach 10.20.20.100     │
+│                                                     │
+│ PC-A checks: Is 10.20.20.100 in MY subnet?          │
+│ My subnet: 10.10.10.0/24                            │
+│ Target:    10.20.20.100                             │
+│                                                     │
+│ 10.20.20.100 is NOT in 10.10.10.0/24               │
+│                                                     │
+│ Decision: Send to Default Gateway (10.10.10.1)      │
+│                                                     │
+│ But first: PC-A needs the MAC address of the GW     │
+│ PC-A checks ARP cache → Not found                  │
+│ PC-A must send an ARP request                       │
+└─────────────────────────────────────────────────────┘</code></pre>
+                </div>
+
+                <p><strong>STEP 2: ARP Resolution</strong></p>
+                <div class="ascii-container">
+<pre><code>ARP REQUEST (Broadcast):
+═══════════════════════
+  [PC-A] ──────────────────────────────► [Everyone on LAN]
+  
+  Ethernet Frame:
+  ┌─────────────────────────────────────────────────────────────┐
+  │ Dst MAC: FF:FF:FF:FF:FF:FF (Broadcast)                      │
+  │ Src MAC: AA:BB:CC:DD:EE:01 (PC-A's MAC)                     │
+  │ Type: ARP (0x0806)                                          │
+  │                                                             │
+  │ ARP Payload:                                                │
+  │   Operation: REQUEST (1)                                    │
+  │   Sender IP:  10.10.10.100                                  │
+  │   Sender MAC: AA:BB:CC:DD:EE:01                             │
+  │   Target IP:  10.10.10.1  ← Who has this IP? Tell me!      │
+  │   Target MAC: 00:00:00:00:00:00 (unknown)                   │
+  └─────────────────────────────────────────────────────────────┘
+
+ARP REPLY (Unicast):
+════════════════════
+  [Router-A] ──────────────────────────────► [PC-A]
+  
+  ┌─────────────────────────────────────────────────────────────┐
+  │ Dst MAC: AA:BB:CC:DD:EE:01 (PC-A)                           │
+  │ Src MAC: FF:EE:DD:CC:BB:01 (Router-A's LAN interface MAC)   │
+  │ Type: ARP (0x0806)                                          │
+  │                                                             │
+  │ ARP Payload:                                                │
+  │   Operation: REPLY (2)                                      │
+  │   Sender IP:  10.10.10.1                                    │
+  │   Sender MAC: FF:EE:DD:CC:BB:01  ← Here I am!              │
+  │   Target IP:  10.10.10.100                                  │
+  │   Target MAC: AA:BB:CC:DD:EE:01                             │
+  └─────────────────────────────────────────────────────────────┘
+  
+  PC-A now knows: "To reach 10.10.10.1, use MAC FF:EE:DD:CC:BB:01"
+  PC-A updates its ARP cache.</code></pre>
+                </div>
+
+                <p><strong>STEP 3: PC-A Creates the Packet</strong></p>
+                <div class="ascii-container">
+<pre><code>  ┌─────────────────────────────────────────────────────────────┐
+  │                    ETHERNET FRAME                           │
+  │                                                             │
+  │ ┌───────────────────────────────────────────────────────┐   │
+  │ │ Dst MAC: FF:EE:DD:CC:BB:01 (Router-A's LAN MAC)       │   │
+  │ │ Src MAC: AA:BB:CC:DD:EE:01 (PC-A's MAC)               │   │
+  │ │ Type: IPv4 (0x0800)                                   │   │
+  │ └───────────────────────────────────────────────────────┘   │
+  │                                                             │
+  │ ┌───────────────────────────────────────────────────────┐   │
+  │ │ IP HEADER                                             │   │
+  │ │ Version: 4                                            │   │
+  │ │ TTL: 64                                               │   │
+  │ │ Protocol: TCP (6) or ICMP (1)                         │   │
+  │ │ Src IP: 10.10.10.100  ← PC-A's private IP            │   │
+  │ │ Dst IP: 10.20.20.100  ← PC-B's private IP            │   │
+  │ └───────────────────────────────────────────────────────┘   │
+  │                                                             │
+  │ ┌───────────────────────────────────────────────────────┐   │
+  │ │ DATA PAYLOAD (HTTP request, ICMP echo, etc.)          │   │
+  │ └───────────────────────────────────────────────────────┘   │
+  └─────────────────────────────────────────────────────────────┘</code></pre>
+                </div>
+
+                <p><strong>STEP 4: Router-A Receives and Processes</strong></p>
+                <div class="ascii-container">
+<pre><code>  Router-A Routing Table:
+  ┌─────────────────────────────────────────────────────────────┐
+  │ Destination        │ Next Hop       │ Interface  │ Type     │
+  │────────────────────│────────────────│────────────│──────────│
+  │ 10.10.10.0/24      │ directly conn. │ ge-0/0/0   │ Direct   │
+  │ 0.0.0.0/0          │ 203.0.113.254  │ ge-0/0/1   │ Static   │
+  │                    │ (ISP-A GW)     │ (WAN)      │          │
+  └─────────────────────────────────────────────────────────────┘
+  
+  Decision: Forward to 203.0.113.254 (ISP-A Gateway) via WAN interface
+  
+  ⚠️  PROBLEM: The source IP is 10.10.10.100 — a PRIVATE IP!
+  ⚠️  ISP will BLOCK or DROP this packet if source is private!</code></pre>
+                </div>
+
+                <p><strong>STEP 5: ISP Router Receives — The DROP Point</strong></p>
+                <div class="ascii-container">
+<pre><code>  ISP Router BGP Table (simplified):
+  ┌──────────────────────────────────────────────────────────┐
+  │ 203.0.113.0/24   → Customer-A                            │
+  │ 198.51.100.0/24  → Customer-B                            │
+  │ 8.8.8.0/24       → Google                                │
+  │ ...thousands more public ranges...                       │
+  │                                                          │
+  │ 10.0.0.0/8       → NOT HERE → PACKET DROPPED ✗         │
+  │ 10.20.20.0/24    → NOT HERE → PACKET DROPPED ✗         │
+  └──────────────────────────────────────────────────────────┘</code></pre>
+                </div>
+            </section>
+
+            <section id="phase-3">
+                <h2>PHASE 3 — VPN TECHNOLOGY COMPARISON</h2>
+                <h3>3.1 — All VPN Types Explained</h3>
+                <div class="ascii-container">
+<pre><code>Site-to-Site VPN
+  [Branch LAN] ──[VPN Router]══════ Internet ══════[VPN Router]──[HQ LAN]
+  Purpose: Connect two FIXED locations permanently
+
+Remote Access VPN
+  [Employee Laptop] ══════ Internet ══════[VPN Gateway]──[Corporate LAN]
+  Purpose: Individual users accessing corporate network remotely
+
+MPLS VPN (L3VPN)
+  [Branch A] ──[PE Router]──[MPLS Cloud (ISP)]──[PE Router]──[Branch B]
+  Purpose: ISP-managed private WAN
+
+GRE Tunnel
+  [Router A] ══════════════[Router B]
+  Purpose: Encapsulation only — creates logical point-to-point link
+
+IPsec Tunnel
+  [Router A] ══════════════[Router B]
+  Purpose: Secure encapsulation with encryption
+
+SSL VPN
+  [Browser/Client] ──HTTPS──[SSL VPN Gateway]──[Internal Resources]
+  Purpose: Web-based remote access, no client software needed
+
+DMVPN (Dynamic Multipoint VPN)
+  Purpose: Hub-and-spoke with dynamic spoke-to-spoke tunnels
+
+SD-WAN
+  Purpose: Software-defined routing across multiple WAN links</code></pre>
+                </div>
+
+                <h3>3.2 — Technology Comparison Master Table</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Technology</th>
+                                <th>Security</th>
+                                <th>Complexity</th>
+                                <th>Scalability</th>
+                                <th>Cost</th>
+                                <th>Latency</th>
+                                <th>Best Use Case</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>IPsec Site-to-Site</td>
+                                <td>████████ Very High</td>
+                                <td>Medium</td>
+                                <td>Good</td>
+                                <td>Low</td>
+                                <td>Low</td>
+                                <td>Site-to-site B2B</td>
+                            </tr>
+                            <tr>
+                                <td>SSL VPN</td>
+                                <td>██████ High</td>
+                                <td>Low</td>
+                                <td>Good</td>
+                                <td>Medium</td>
+                                <td>Medium</td>
+                                <td>Remote user access</td>
+                            </tr>
+                            <tr>
+                                <td>MPLS VPN (L3VPN)</td>
+                                <td>████████ Very High</td>
+                                <td>Low* (*ISP manages)</td>
+                                <td>Excellent</td>
+                                <td>Very High</td>
+                                <td>Very Low</td>
+                                <td>Enterprise WAN, banks, gov</td>
+                            </tr>
+                            <tr>
+                                <td>GRE</td>
+                                <td>██ None</td>
+                                <td>Low</td>
+                                <td>Limited</td>
+                                <td>Low</td>
+                                <td>Very Low</td>
+                                <td>Routing protocol transport only</td>
+                            </tr>
+                            <tr>
+                                <td>GRE+IPsec</td>
+                                <td>████████ Very High</td>
+                                <td>Medium</td>
+                                <td>Moderate</td>
+                                <td>Low</td>
+                                <td>Low</td>
+                                <td>Dynamic routing over encrypted tunnel</td>
+                            </tr>
+                            <tr>
+                                <td>DMVPN</td>
+                                <td>████████ Very High</td>
+                                <td>High</td>
+                                <td>Excellent</td>
+                                <td>Low</td>
+                                <td>Low</td>
+                                <td>Large branch networks (100+)</td>
+                            </tr>
+                            <tr>
+                                <td>SD-WAN</td>
+                                <td>██████ High</td>
+                                <td>Medium* (*portal managed)</td>
+                                <td>Excellent</td>
+                                <td>Medium</td>
+                                <td>Very Low</td>
+                                <td>Modern enterprise, cloud-first orgs</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="phase-4">
+                <h2>PHASE 4 — IPsec DEEP DIVE</h2>
+                <h3>4.1 — What IPsec Is</h3>
+                <div class="ascii-container">
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│                    IPsec SECURITY SERVICES                      │
+│                                                                 │
+│  ┌────────────────────┐  Description                            │
+│  │  CONFIDENTIALITY   │  Data encrypted → cannot be read       │
+│  │  (Privacy)         │  even if intercepted                    │
+│  └────────────────────┘                                         │
+│                                                                 │
+│  ┌────────────────────┐  Description                            │
+│  │  INTEGRITY         │  Data cannot be modified in transit     │
+│  │  (Anti-tamper)     │  without detection (HMAC hash)          │
+│  └────────────────────┘                                         │
+│                                                                 │
+│  ┌────────────────────┐  Description                            │
+│  │  AUTHENTICATION    │  Both endpoints verified                │
+│  │  (Identity)        │  (PSK, certificates, or RSA)            │
+│  └────────────────────┘                                         │
+│                                                                 │
+│  ┌────────────────────┐  Description                            │
+│  │  ANTI-REPLAY       │  Old packets cannot be replayed         │
+│  │  (Freshness)       │  by attackers (sequence numbers)        │
+│  └────────────────────┘                                         │
+│                                                                 │
+│  ┌────────────────────┐  Description                            │
+│  │  PERFECT FORWARD   │  Compromise of one session key          │
+│  │  SECRECY (PFS)     │  doesn't expose other sessions          │
+│  └────────────────────┘                                         │
+└─────────────────────────────────────────────────────────────────┘</code></pre>
+                </div>
+
+                <h3>4.2 — IPsec Protocol Suite: AH vs ESP</h3>
+                <div class="ascii-container">
+<pre><code>ESP — Encapsulating Security Payload
+  ESP provides: Encryption (confidentiality)
+  ESP provides: Authentication + Integrity (optional but usually enabled)
+  ESP provides: Anti-Replay
+  
+  After ESP (Tunnel Mode):
+  ┌──────────┬─────────┬══════════════════════════════════╗═════════┐
+  │ New IP   │   ESP   ║ Original  │ TCP/UDP │  Payload   ║  ESP    │
+  │ Header   │ Header  ║ IP Header │ Header  │  (Data)    ║ Trailer │
+  │(Public   │         ║                                  ║         │
+  │ IPs)     │         ║   ← EVERYTHING HERE ENCRYPTED → ║         │
+  └──────────┴─────────┴══════════════════════════════════╝═════════┘
+  │ Visible  │Visible  │────────── ENCRYPTED ────────────│         │
+  │ to all   │to all   │    Nobody can read this          │         │</code></pre>
+                </div>
+
+                <h3>4.5 — IKEv1 vs IKEv2</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>IKEv1</th>
+                                <th>IKEv2</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Year standardized</td>
+                                <td>RFC 2409 (1998)</td>
+                                <td>RFC 7296 (2014)</td>
+                            </tr>
+                            <tr>
+                                <td>Phase 1 name<br>Phase 2 name</td>
+                                <td>IKE Phase 1<br>(Quick Mode)</td>
+                                <td>IKE_SA_INIT<br>IKE_AUTH + CREATE_CHILD_SA</td>
+                            </tr>
+                            <tr>
+                                <td>Messages for setup</td>
+                                <td>9 messages (Main Mode)</td>
+                                <td>4 messages (Much faster!)</td>
+                            </tr>
+                            <tr>
+                                <td>NAT traversal</td>
+                                <td>Extension (draft)</td>
+                                <td>Built-in</td>
+                            </tr>
+                            <tr>
+                                <td>Dead Peer Detection</td>
+                                <td>Extension</td>
+                                <td>Built-in (INFORMNL)</td>
+                            </tr>
+                            <tr>
+                                <td>EAP Authentication</td>
+                                <td>No</td>
+                                <td>Yes (mobile clients)</td>
+                            </tr>
+                            <tr>
+                                <td>MOBIKE (mobility)</td>
+                                <td>No</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>Reliability</td>
+                                <td>Less reliable</td>
+                                <td>More reliable (request/response)</td>
+                            </tr>
+                            <tr>
+                                <td>Juniper default</td>
+                                <td>Supported</td>
+                                <td>Preferred/default</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>4.6 — IPsec Two-Phase Architecture</h3>
+                <div class="ascii-container">
+<pre><code>  ┌─────────────────────────────────────────────────────────────┐
+  │                                                             │
+  │  Phase 1 SA  ──────────────────────────────────────────     │
+  │  (IKE SA)    Long-lived, used for re-keying                 │
+  │                │                                            │
+  │                └──► Phase 2 SA (IPsec SA)                   │
+  │                     Short-lived, carries actual DATA        │
+  │                     Expires sooner, re-keyed more often     │
+  │                     Two unidirectional SAs:                 │
+  │                     A→B: SPI=0xABCD, Key=K1                 │
+  │                     B→A: SPI=0xEF01, Key=K2                 │
+  └─────────────────────────────────────────────────────────────┘</code></pre>
+                </div>
+
+            </section>
+
+            <section id="phase-5">
+                <h2>PHASE 5 — JUNIPER SITE-TO-SITE VPN TOPOLOGY</h2>
+                <h3>5.1 — Complete Topology</h3>
+                <div class="ascii-container">
+<pre><code>╔═══════════════════════════════════════════════════════════════════════════════════╗
+║                    INSTITUTION A ↔ INSTITUTION B VPN TOPOLOGY                     ║
+╚═══════════════════════════════════════════════════════════════════════════════════╝
+
+INSTITUTION A                         INTERNET                      INSTITUTION B
+═════════════                        ═════════                      ═════════════
+
+  ┌─────────────┐                                                  ┌─────────────┐
+  │   PC-A      │                                                  │   PC-B      │
+  │10.10.10.100 │                                                  │10.20.20.100 │
+  └──────┬──────┘                                                  └──────┬──────┘
+         │                                                                │
+  ┌──────┴──────────────────┐                       ┌───────────────────┴──────┐
+  │     JUNIPER SRX-A       │                       │     JUNIPER SRX-B        │
+  │                         │                       │                          │
+  │  ge-0/0/0 (Trust/LAN)   │                       │  ge-0/0/0 (Trust/LAN)    │
+  │  IP: 10.10.10.1/24      │                       │  IP: 10.20.20.1/24       │
+  │                         │                       │                          │
+  │  ge-0/0/1 (Untrust/WAN) │                       │  ge-0/0/1 (Untrust/WAN)  │
+  │  IP: 203.0.113.1/30     ├──────────────────────►│  IP: 198.51.100.1/30     │
+  │                         │   Internet (Public)   │                          │
+  │  Security Zones:        │  ══════════════════   │  Security Zones:         │
+  │  - trust (LAN)          │                       │  - trust (LAN)           │
+  │  - untrust (WAN)        │                       │  - untrust (WAN)         │
+  │  - vpn                  │                       │  - vpn                   │
+  │                         │                       │                          │
+  │  VPN Tunnel Interface:  │                       │  VPN Tunnel Interface:   │
+  │  st0.0                  │◄═════ IPsec ═════════►│  st0.0                   │
+  │  IP: 172.16.0.1/30      │    Encrypted Tunnel   │  IP: 172.16.0.2/30       │
+  └─────────────────────────┘                       └──────────────────────────┘</code></pre>
+                </div>
+            </section>
+
+            <section id="phase-6">
+                <h2>PHASE 6 — COMPLETE PACKET JOURNEY</h2>
+                <div class="ascii-container">
+<pre><code>══════════════════════════════════════════════════════════════════
+         COMPLETE PACKET JOURNEY: PC-A → PC-B via VPN
+══════════════════════════════════════════════════════════════════</code></pre>
+                </div>
+                <p><strong>STEP 4: Security Policy Lookup</strong><br>
+                Before forwarding, Juniper SRX checks Security Policies:</p>
+                <div class="ascii-container">
+<pre><code>  ┌────────────────────────────────────────────────────────────────┐
+  │ SECURITY POLICY: trust-to-vpn                                  │
+  │────────────────────────────────────────────────────────────────│
+  │ Match:                                                         │
+  │   Source Address:      local-net (10.10.10.0/24)               │
+  │   Destination Address: remote-net (10.20.20.0/24)              │
+  │   Application:         any                                     │
+  │                                                                │
+  │ Action: PERMIT                                                 │
+  │ + Log: session-init                                            │
+  └────────────────────────────────────────────────────────────────┘</code></pre>
+                </div>
+                <p><strong>STEP 5: IPsec Encryption</strong></p>
+                <div class="ascii-container">
+<pre><code>  5. Add NEW outer IP header:
+  ┌─────────────────────┬────────────┬────────────────────────┐
+  │   OUTER IP HEADER   │ ESP HEADER │  ENCRYPTED PAYLOAD     │
+  │ Src: 203.0.113.1    │ SPI:0xABCD │  + ESP Trailer         │
+  │ Dst: 198.51.100.1   │ Seq:  0001 │                        │
+  │ Proto: 50 (ESP)     │            │                        │
+  │ TTL: 64             │            │                        │
+  └─────────────────────┴────────────┴────────────────────────┘</code></pre>
+                </div>
+            </section>
+
+            <section id="phase-7">
+                <h2>PHASE 7 — IKE NEGOTIATION DEEP DIVE</h2>
+                <h3>7.1 — IKEv2 Message Sequence</h3>
+                <div class="ascii-container">
+<pre><code>  SRX-A (Initiator)                           SRX-B (Responder)
+  203.0.113.1                                 198.51.100.1
+  
+  EXCHANGE 1: IKE_SA_INIT (Phase 1 equivalent)
+  ─────────────────────────────────────────────
+  
+  [1] ──── IKE_SA_INIT Request ─────────────────────────────────►
+      Contains: SA payload, KE payload, Ni payload
+      
+  [2] ◄─── IKE_SA_INIT Response ───────────────────────────────
+      Contains: SA payload, KE payload, Nr payload, CERTREQ
+      
+  EXCHANGE 2: IKE_AUTH (Authenticate + Create First Child SA)
+  ─────────────────────────────────────────────────────────────────
+  
+  [3] ──── IKE_AUTH Request ────────────────────────────────────►
+      ENCRYPTED with SK_e !!!
+      Contains: IDi, AUTH, CERT, SA payload, TSi/TSr
+      
+  [4] ◄─── IKE_AUTH Response ──────────────────────────────────
+      ENCRYPTED with SK_e !!!
+      Contains: IDr, AUTH, CERT, SA payload, TSi/TSr, N (Notify)</code></pre>
+                </div>
+            </section>
+
+            <section id="phase-8">
+                <h2>PHASE 8 — JUNIPER CONFIGURATION MASTERCLASS</h2>
+                <h3>8.1 — Complete JunOS Configuration: Institution A (SRX-A)</h3>
+                
+                <div class="code-wrapper" data-language="junos">
+                    <button class="copy-btn">Copy</button>
+<pre><code class="language-junos">## ══════════════════════════════════════════════════════════
+## JUNIPER SRX-A COMPLETE IPsec SITE-TO-SITE VPN CONFIG
+## Institution A: LAN 10.10.10.0/24, WAN 203.0.113.1
+## Remote Institution B: LAN 10.20.20.0/24, WAN 198.51.100.1
+## ══════════════════════════════════════════════════════════
+
+interfaces {
+    ge-0/0/0 {
+        unit 0 { family inet { address 10.10.10.1/24; } }
+    }
+    ge-0/0/1 {
+        unit 0 { family inet { address 203.0.113.1/30; } }
+    }
+    st0 {
+        unit 0 { family inet { address 172.16.0.1/30; } }
+    }
+}
+
+routing-options {
+    static {
+        route 0.0.0.0/0 next-hop 203.0.113.254;
+        route 10.20.20.0/24 next-hop st0.0;
+    }
+}
+
+security {
+    zones {
+        security-zone trust {
+            interfaces {
+                ge-0/0/0.0 { host-inbound-traffic { system-services { ping; ssh; dhcp; } } }
+            }
+            address-book { address local-net 10.10.10.0/24; }
+        }
+        
+        security-zone untrust {
+            interfaces {
+                ge-0/0/1.0 { host-inbound-traffic { system-services { ike; } } }
+            }
+            address-book { address remote-gw 198.51.100.1/32; }
+        }
+        
+        security-zone vpn {
+            interfaces { st0.0; }
+            address-book { address remote-net 10.20.20.0/24; }
+        }
+    }
+
+    ike {
+        proposal phase1-proposal {
+            authentication-method pre-shared-keys;
+            dh-group group14;
+            authentication-algorithm sha-256;
+            encryption-algorithm aes-256-cbc;
+            lifetime-seconds 86400;
+        }
+        
+        policy ike-policy-to-b {
+            mode main;
+            proposals phase1-proposal;
+            pre-shared-key ascii-text "R@KUBVPNS3cr3t!2024";
+        }
+        
+        gateway vpn-gateway-to-b {
+            ike-policy ike-policy-to-b;
+            address 198.51.100.1;
+            dead-peer-detection { interval 10; threshold 5; }
+            external-interface ge-0/0/1.0;
+            version v2-only;
+            local-identity inet 203.0.113.1;
+            remote-identity inet 198.51.100.1;
+        }
+    }
+
+    ipsec {
+        proposal phase2-proposal {
+            protocol esp;
+            authentication-algorithm hmac-sha-256-128;
+            encryption-algorithm aes-256-cbc;
+            lifetime-seconds 3600;
+        }
+        
+        policy ipsec-policy {
+            perfect-forward-secrecy { keys group14; }
+            proposals phase2-proposal;
+        }
+        
+        vpn site-b-vpn {
+            bind-interface st0.0;
+            ike {
+                gateway vpn-gateway-to-b;
+                ipsec-policy ipsec-policy;
+            }
+            traffic-selector ts-a-to-b {
+                local-ip 0.0.0.0/0;
+                remote-ip 0.0.0.0/0;
+            }
+            establish-tunnels immediately;
+        }
+    }
+
+    policies {
+        from-zone trust to-zone vpn {
+            policy trust-to-vpn {
+                match {
+                    source-address local-net;
+                    destination-address remote-net;
+                    application any;
+                }
+                then { permit; }
+            }
+        }
+        
+        from-zone vpn to-zone trust {
+            policy vpn-to-trust {
+                match {
+                    source-address remote-net;
+                    destination-address local-net;
+                    application any;
+                }
+                then { permit; }
+            }
+        }
+        
+        from-zone trust to-zone untrust {
+            policy trust-to-internet {
+                match {
+                    source-address local-net;
+                    destination-address any;
+                    application any;
+                }
+                then { permit; }
+            }
+        }
+    }
+
+    nat {
+        source {
+            rule-set trust-to-internet {
+                from zone trust;
+                to zone untrust;
+                rule nat-rule {
+                    match {
+                        source-address 10.10.10.0/24;
+                        destination-address 0.0.0.0/0;
+                    }
+                    then { source-nat { interface; } }
+                }
+            }
+        }
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="phase-9">
+                <h2>PHASE 9 — TROUBLESHOOTING MASTERCLASS</h2>
+                <div class="accordion-group">
+                    <details>
+                        <summary>9.2 — Scenario: Phase 1 Fails (IKE SA Not Coming Up)</summary>
+                        <div class="accordion-content">
+                            <p><strong>SYMPTOMS:</strong></p>
+                            <ul>
+                                <li><code>show security ike sa</code> → empty or state DOWN</li>
+                                <li><code>show log messages</code> → "NO_PROPOSAL_CHOSEN" or "AUTHENTICATION_FAILED"</li>
+                            </ul>
+                            <div class="ascii-container">
+<pre><code>Error: "NO_PROPOSAL_CHOSEN"
+┌──────────────────────────────────────────────────────────────┐
+│ Cause: Algorithm mismatch between peers                      │
+│ Fix: Compare proposals on BOTH sides:                        │
+│ Solution: Make proposals IDENTICAL on both peers             │
+└──────────────────────────────────────────────────────────────┘
+
+Error: "AUTHENTICATION_FAILED" 
+┌──────────────────────────────────────────────────────────────┐
+│ Cause: PSK mismatch                                          │
+│ Fix: Verify PSK on both sides — case sensitive!              │
+└──────────────────────────────────────────────────────────────┘</code></pre>
+                            </div>
+                        </div>
+                    </details>
+                    
+                    <details>
+                        <summary>9.3 — Scenario: Phase 2 Fails (IPsec SA Not Coming Up)</summary>
+                        <div class="accordion-content">
+                            <p><strong>SYMPTOMS:</strong></p>
+                            <ul>
+                                <li>IKE SA is UP</li>
+                                <li><code>show security ipsec sa</code> → empty or no entries</li>
+                            </ul>
+                            <div class="ascii-container">
+<pre><code>Error: "TS_UNACCEPTABLE" (Traffic Selector mismatch)
+┌──────────────────────────────────────────────────────────────┐
+│ Cause: Traffic selectors (proxy IDs) don't match             │
+│ Fix for route-based VPN with 0.0.0.0/0 selectors:            │
+│ vpn site-b-vpn {                                             │
+│   traffic-selector ts-a-to-b {                               │
+│     local-ip 0.0.0.0/0;                                      │
+│     remote-ip 0.0.0.0/0;                                     │
+│   }                                                          │
+│ }                                                            │
+└──────────────────────────────────────────────────────────────┘</code></pre>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>9.4 — Scenario: Tunnel UP but No Traffic</summary>
+                        <div class="accordion-content">
+                            <p><strong>SYMPTOMS:</strong> Both IKE SA and IPsec SA show UP. Ping from SRX itself works, but from LAN host fails.</p>
+                            <div class="code-wrapper" data-language="junos">
+                                <button class="copy-btn">Copy</button>
+<pre><code class="language-junos">ping 10.20.20.100 routing-instance default            ## From SRX router
+ping 10.20.20.100 source 10.10.10.1 routing-instance default  ## From LAN IP</code></pre>
+                            </div>
+                            <p>If #1 works but #2 fails → Security policy issue. If both fail → Routing issue.</p>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <section id="phase-12">
+                <h2>PHASE 12 — EXPERT LEVEL TOPICS</h2>
+                <h3>12.1 — Route-Based vs Policy-Based VPN</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Policy-Based</th>
+                                <th>Route-Based</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Traffic Selection</td>
+                                <td>Security Policy</td>
+                                <td>Routing Table</td>
+                            </tr>
+                            <tr>
+                                <td>Tunnel Interface</td>
+                                <td>No (implicit)</td>
+                                <td>Yes (st0.x)</td>
+                            </tr>
+                            <tr>
+                                <td>Dynamic Routing</td>
+                                <td>No</td>
+                                <td>Yes (OSPF/BGP/IS-IS)</td>
+                            </tr>
+                            <tr>
+                                <td>Multiple Subnets</td>
+                                <td>One SA per subnet</td>
+                                <td>One SA for all</td>
+                            </tr>
+                            <tr>
+                                <td>NAT over Tunnel</td>
+                                <td>Complex</td>
+                                <td>Easy</td>
+                            </tr>
+                            <tr>
+                                <td>Monitoring</td>
+                                <td>Limited</td>
+                                <td>Full interface stats</td>
+                            </tr>
+                            <tr>
+                                <td>Legacy Compatibility</td>
+                                <td>Good (old devices)</td>
+                                <td>May need support check</td>
+                            </tr>
+                            <tr>
+                                <td>Juniper Preference</td>
+                                <td>Legacy</td>
+                                <td>Current standard</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="phase-13">
+                <h2>PHASE 13 — PRACTICAL LABS</h2>
+                <div class="accordion-group">
+                    <details>
+                        <summary>LAB 1 — BEGINNER: Basic Site-to-Site VPN</summary>
+                        <div class="accordion-content">
+                            <p><strong>OBJECTIVE:</strong> Establish an IPsec VPN between two Juniper SRX devices. Verify end-to-end connectivity between two LANs.</p>
+                            <ul>
+                                <li>TASK 1: Apply the SRX-A configuration from Phase 8</li>
+                                <li>TASK 2: Apply the SRX-B configuration from Phase 8</li>
+                                <li>TASK 3: Verify IKE SA: <code>show security ike sa</code></li>
+                                <li>TASK 4: Verify IPsec SA: <code>show security ipsec sa</code></li>
+                                <li>TASK 5: Ping test: <code>ping 10.20.20.100 routing-instance default</code></li>
+                            </ul>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>LAB 2 — INTERMEDIATE: Dual-Hub Redundant VPN</summary>
+                        <div class="accordion-content">
+                            <p><strong>OBJECTIVE:</strong> Build primary and backup VPN tunnels. Demonstrate automatic failover.</p>
+                            <ul>
+                                <li>TASK 1: Configure two st0 interfaces on HQ (st0.1, st0.2)</li>
+                                <li>TASK 2: Configure two VPN objects pointing to Branch</li>
+                                <li>TASK 3: Configure two static routes with different metrics</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </section>
+            
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
